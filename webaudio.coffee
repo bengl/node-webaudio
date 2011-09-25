@@ -1,2 +1,1 @@
-portaudio = require('./portaudio')
-
+pa = require('./portaudio')

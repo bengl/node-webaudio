@@ -1,6 +1,6 @@
 # based on https://github.com/jvoorhis/ruby-portaudio/blob/master/lib/portaudio.rb
 ffi = require 'node-ffi'
-portaudio = new ffi.Library "libportaudio"
+
 
 # types
 PA_ERROR = 'int'
@@ -87,10 +87,46 @@ PaStreamInfo = ffi.Struct [
 	['double','sample_rate']
 ]
 
+
+portaudio = new ffi.Library "libportaudio",
+	    'Pa_GetVersion': ['int', []]
+	    'Pa_GetVersionText': ['string',[]]
+	    'Pa_GetErrorText': ['string',[PA_ERROR]]
+	    'Pa_Initialize': [PA_ERROR,[]]
+	    'Pa_Terminate': [PA_ERROR,[]]
+	    'Pa_GetHostApiCount': [PA_DEVICE_INDEX,[]]
+	    'Pa_GetDefaultHostApi': [PA_DEVICE_INDEX,[]]
+	    'Pa_GetHostApiInfo': ['pointer',['int']]
+	    'Pa_HostApiTypeIdToHostApiIndex': [PA_HOST_API_INDEX,[PA_HOST_API_TYPE_ID]]
+	    'Pa_HostApiDeviceIndexToDeviceIndex': [PA_DEVICE_INDEX,[PA_HOST_API_INDEX, 'int']]
+	    'Pa_GetLastHostErrorInfo': [PaHostErrorInfo,[]]
+	    'Pa_GetDeviceCount': [PA_DEVICE_INDEX,[]]
+	    'Pa_GetDefaultInputDevice': [PA_DEVICE_INDEX,[]]
+	    'Pa_GetDefaultOutputDevice': [PA_DEVICE_INDEX,[]]
+	    'Pa_GetDeviceInfo': ['pointer',[PA_DEVICE_INDEX]]
+	    'Pa_IsFormatSupported': [PA_ERROR,['pointer', 'pointer', 'double']]
+	    'Pa_OpenStream': [PA_ERROR,['pointer', 'pointer', 'pointer', 'double', 'ulong', PA_STREAM_FLAGS, PA_STREAM_CALLBACK, 'pointer']]
+	    'Pa_OpenDefaultStream': [PA_ERROR,['pointer', 'int', 'int', PA_SAMPLE_FORMAT, 'double', 'ulong', PA_STREAM_CALLBACK, 'pointer']]
+	    'Pa_CloseStream': [PA_ERROR,['pointer']]
+	    'Pa_SetStreamFinishedCallback': [PA_ERROR,['pointer', 'pointer']]
+	    'Pa_StartStream': [PA_ERROR,['pointer']]
+	    'Pa_StopStream': [PA_ERROR,['pointer']]
+	    'Pa_AbortStream': [PA_ERROR,['pointer']]
+	    'Pa_IsStreamStopped': [PA_ERROR,['pointer']]
+	    'Pa_IsStreamActive': [PA_ERROR,['pointer']]
+	    'Pa_GetStreamInfo': ['pointer',['pointer']]
+	    'Pa_GetStreamTime': [PA_TIME,['pointer']]
+	    'Pa_GetStreamCpuLoad': ['double',['pointer']]
+	    'Pa_ReadStream': [PA_ERROR,['pointer', 'pointer', 'ulong']]
+	    'Pa_WriteStream': [PA_ERROR,['pointer', 'pointer', 'ulong']]
+	    'Pa_GetStreamReadAvailable': ['long',['pointer']]
+	    'Pa_GetStreamWriteAvailable': ['long',['pointer']]
+	    'Pa_GetSampleSize': [PA_ERROR,['ulong']]
+	    'Pa_Sleep': ['void',['long']]
+
 module.exports.verison_number = -> portaudio.Pa_GetVersion()
 module.exports.version_text = -> portaudio.Pa_GetVersionText()
 module.exports.error_text = (pa_err)-> portaudio.Pa_GetVersionText(pa_err)
 module.exports.init = -> portaudio.Pa_Initialize()
 module.exports.terminate = -> portaudio.Pa_Terminate()
 module.exports.sleep = (msec)-> portaudio.Pa_GetVersionText(msec)
-
