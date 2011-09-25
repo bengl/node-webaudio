@@ -1,4 +1,4 @@
 build/
 *.swp
 .lock-wscript
-node-modules/
+node_modules
