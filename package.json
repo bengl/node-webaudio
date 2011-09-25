@@ -1,0 +1,18 @@
+{
+  "author": "Bryan English <bryan@bryanenglish.com>",
+  "name": "webaudio",
+  "description": "Web Audio API using PortAudio and node-ffi",
+  "version": "0.0.1",
+  "repository": {
+    "url": ""
+  },
+  "main": "index.js",
+  "engines": {
+    "node": "~v0.4.7"
+  },
+  "dependencies": {
+		"node-ffi":"0.4.0",
+		"coffee-script":"1.1.1"	
+	},
+  "devDependencies": {}
+}
