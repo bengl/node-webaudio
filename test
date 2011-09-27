@@ -1,0 +1,2 @@
+gcc -g -Wall -o portaudio portaudio.c -lportaudio
+echo "compiled. now run ./portaudio"
